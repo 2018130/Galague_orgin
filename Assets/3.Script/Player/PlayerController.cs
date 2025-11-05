@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
 
     // status
-    private float maxHP = 10f;
+    private float maxHP = 100f;
     public float MaxHP => maxHP;
 
 

@@ -37,7 +37,8 @@ public class BossController : EnemyController
     {
         StartCoroutine(ChangeDir_co());
         StartCoroutine(ShootBullet_co());
-        StartCoroutine(ShootSkill_01());
+        StartCoroutine(ShootSkill_01_co());
+        StartCoroutine(ShootSkill_02_co());
     }
 
     private void Update()
@@ -78,17 +79,18 @@ public class BossController : EnemyController
         }
     }
 
-    private IEnumerator ShootSkill_01()
+    #region
+    private IEnumerator ShootSkill_01_co()
     {
         while (true)
         {
-            Shoot();
+            ShootSkill_01();
 
             yield return new WaitForSeconds(10f);
         }
     }
 
-    private void Shoot()
+    private void ShootSkill_01()
     {
         float offset = 2f;
         float bulletDist = 0.5f;
@@ -103,7 +105,43 @@ public class BossController : EnemyController
             clone.transform.position = new Vector3(posX, transform.position.y - 0.3f);
         }
     }
+    private IEnumerator ShootSkill_02_co()
+    {
+        while (true)
+        {
+            ShootSkill_02(1);
 
+            yield return new WaitForSeconds(0.5f);
+
+            ShootSkill_02(2);
+
+            yield return new WaitForSeconds(0.5f);
+
+            ShootSkill_02(3);
+
+
+
+            yield return new WaitForSeconds(7f);
+        }
+    }
+
+    private void ShootSkill_02(int bulletCount)
+    {
+        float bulletDist = 0.5f;
+
+        for (int i = 0; i < bulletCount; i++)
+        {
+            float posX =  -(i * bulletDist);
+            GameObject clone = GetObjectFromPool();
+            clone.transform.position = new Vector3(posX, transform.position.y - 0.3f);
+
+            posX = i * bulletDist;
+            clone = GetObjectFromPool();
+            clone.transform.position = new Vector3(posX, transform.position.y - 0.3f);
+        }
+    }
+
+    #endregion
     #region pooling
     public static void ReturnToPool(GameObject gameObject)
     {
